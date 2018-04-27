@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.hjkilo.dao.RecordMapper" >
+  <resultMap id="BaseResultMap" type="cn.hjkilo.pojo.Record" >
+    <result column="userid" property="userid" jdbcType="INTEGER" />
+    <result column="auctionid" property="auctionid" jdbcType="INTEGER" />
+    <result column="auctiontime" property="auctiontime" jdbcType="TIMESTAMP" />
+    <result column="auctionprice" property="auctionprice" jdbcType="INTEGER" />
+  </resultMap>
+  <insert id="insert" parameterType="cn.hjkilo.pojo.Record" >
+    insert into auctionrecord (userid, auctionid, auctiontime, 
+      auctionprice)
+    values (#{userid,jdbcType=INTEGER}, #{auctionid,jdbcType=INTEGER}, #{auctiontime,jdbcType=TIMESTAMP}, 
+      #{auctionprice,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.hjkilo.pojo.Record" >
+    insert into auctionrecord
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="auctionid != null" >
+        auctionid,
+      </if>
+      <if test="auctiontime != null" >
+        auctiontime,
+      </if>
+      <if test="auctionprice != null" >
+        auctionprice,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="auctionid != null" >
+        #{auctionid,jdbcType=INTEGER},
+      </if>
+      <if test="auctiontime != null" >
+        #{auctiontime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auctionprice != null" >
+        #{auctionprice,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+  <select id="getRecordByAuctionId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select * from auctionrecord where auctionid=#{id}
+  </select>
+</mapper>

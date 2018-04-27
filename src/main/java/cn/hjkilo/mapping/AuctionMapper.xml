@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.hjkilo.dao.AuctionMapper" >
+  <resultMap id="BaseResultMap" type="cn.hjkilo.pojo.Auction" >
+    <id column="auctioid" property="auctioid" jdbcType="INTEGER" />
+    <result column="auctionname" property="auctionname" jdbcType="VARCHAR" />
+    <result column="auctionstartprice" property="auctionstartprice" jdbcType="INTEGER" />
+    <result column="auctionstarttime" property="auctionstarttime" jdbcType="DATE" />
+    <result column="auctionendtime" property="auctionendtime" jdbcType="DATE" />
+    <result column="auctionpic" property="auctionpic" jdbcType="VARCHAR" />
+    <result column="auctiondesc" property="auctiondesc" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    auctioid, auctionname, auctionstartprice, auctionstarttime, auctionendtime, auctionpic, 
+    auctiondesc
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from auction
+    where auctioid = #{auctioid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from auction
+    where auctioid = #{auctioid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.hjkilo.pojo.Auction" >
+    insert into auction (auctioid, auctionname, auctionstartprice, 
+      auctionstarttime, auctionendtime, auctionpic, 
+      auctiondesc)
+    values (#{auctioid,jdbcType=INTEGER}, #{auctionname,jdbcType=VARCHAR}, #{auctionstartprice,jdbcType=INTEGER}, 
+      #{auctionstarttime,jdbcType=DATE}, #{auctionendtime,jdbcType=DATE}, #{auctionpic,jdbcType=VARCHAR}, 
+      #{auctiondesc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.hjkilo.pojo.Auction" >
+    insert into auction
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="auctioid != null" >
+        auctioid,
+      </if>
+      <if test="auctionname != null" >
+        auctionname,
+      </if>
+      <if test="auctionstartprice != null" >
+        auctionstartprice,
+      </if>
+      <if test="auctionstarttime != null" >
+        auctionstarttime,
+      </if>
+      <if test="auctionendtime != null" >
+        auctionendtime,
+      </if>
+      <if test="auctionpic != null" >
+        auctionpic,
+      </if>
+      <if test="auctiondesc != null" >
+        auctiondesc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="auctioid != null" >
+        #{auctioid,jdbcType=INTEGER},
+      </if>
+      <if test="auctionname != null" >
+        #{auctionname,jdbcType=VARCHAR},
+      </if>
+      <if test="auctionstartprice != null" >
+        #{auctionstartprice,jdbcType=INTEGER},
+      </if>
+      <if test="auctionstarttime != null" >
+        #{auctionstarttime,jdbcType=DATE},
+      </if>
+      <if test="auctionendtime != null" >
+        #{auctionendtime,jdbcType=DATE},
+      </if>
+      <if test="auctionpic != null" >
+        #{auctionpic,jdbcType=VARCHAR},
+      </if>
+      <if test="auctiondesc != null" >
+        #{auctiondesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.hjkilo.pojo.Auction" >
+    update auction
+    <set >
+      <if test="auctionname != null" >
+        auctionname = #{auctionname,jdbcType=VARCHAR},
+      </if>
+      <if test="auctionstartprice != null" >
+        auctionstartprice = #{auctionstartprice,jdbcType=INTEGER},
+      </if>
+      <if test="auctionstarttime != null" >
+        auctionstarttime = #{auctionstarttime,jdbcType=DATE},
+      </if>
+      <if test="auctionendtime != null" >
+        auctionendtime = #{auctionendtime,jdbcType=DATE},
+      </if>
+      <if test="auctionpic != null" >
+        auctionpic = #{auctionpic,jdbcType=VARCHAR},
+      </if>
+      <if test="auctiondesc != null" >
+        auctiondesc = #{auctiondesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where auctioid = #{auctioid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.hjkilo.pojo.Auction" >
+    update auction
+    set auctionname = #{auctionname,jdbcType=VARCHAR},
+      auctionstartprice = #{auctionstartprice,jdbcType=INTEGER},
+      auctionstarttime = #{auctionstarttime,jdbcType=DATE},
+      auctionendtime = #{auctionendtime,jdbcType=DATE},
+      auctionpic = #{auctionpic,jdbcType=VARCHAR},
+      auctiondesc = #{auctiondesc,jdbcType=VARCHAR}
+    where auctioid = #{auctioid,jdbcType=INTEGER}
+  </update>
+
+  <select id="count" resultType="java.lang.Integer">
+    select count(*) as num from auction
+  </select>
+  <select id="getAllpage" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+         select * from auction limit #{0} ,#{1}
+  </select>
+
+  <select id="getAuctionById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+         select * from auction where auctioid = #{id}
+  </select>
+</mapper>
